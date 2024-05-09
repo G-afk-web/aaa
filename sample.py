@@ -15,9 +15,13 @@ def detect_human(image_path):
     # 顔を検出する
     faces = face_cascade.detectMultiScale(gray_image, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
 
+    # 検出された顔の数をカウントする
+    num_faces = len(faces)
+
     # 顔が検出されたかどうかを判定する
-    if len(faces) > 0:
+    if num_faces > 0:
         print("人間の識別結果: 〇")
+        print("検出された顔の数:", num_faces)
         for (x, y, w, h) in faces:
             # 検出された顔を矩形で囲む
             cv2.rectangle(image, (x, y), (x+w, y+h), (255, 0, 0), 2)
