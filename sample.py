@@ -6,22 +6,31 @@ def detect_human(image_path):
 
     # 画像を読み込む
     image = cv2.imread(image_path)
+    if image is None:
+        print("Error: 画像を読み込めませんでした。ファイルパスを確認してください。")
+        return
+
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     # 顔を検出する
     faces = face_cascade.detectMultiScale(gray_image, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
 
-    # 顔が検出された場合は〇、検出されなかった場合は×を返す
+    # 顔が検出されたかどうかを判定する
     if len(faces) > 0:
-        return "〇"
+        print("人間の識別結果: 〇")
+        for (x, y, w, h) in faces:
+            # 検出された顔を矩形で囲む
+            cv2.rectangle(image, (x, y), (x+w, y+h), (255, 0, 0), 2)
+        # 顔が検出された画像を表示する
+        cv2.imshow("Detected Faces", image)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
     else:
-        return "×"
+        print("人間の識別結果: ×")
 
-# 画像のパス
-image_path = "d8710952b8f951c661174ec48194f787.jpg"
+# 画像のパスをユーザーに入力してもらう
+image_path = input("画像のパスを入力してください: ")
 
 # 人間の識別を実行
-result = detect_human(image_path)
-print("人間の識別結果:", result)
-
+detect_human(image_path)
 
