@@ -31,6 +31,10 @@ def detect_human(image_path):
         cv2.destroyAllWindows()
     else:
         print("人間の識別結果: ×")
+        # 顔が検出されなかった場合も画像を表示する
+        cv2.imshow("Detected Faces", image)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
 # 画像のパスをユーザーに入力してもらう
 image_path = input("画像のパスを入力してください: ")
